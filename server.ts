@@ -1,5 +1,5 @@
-import NodeServer from './NodeServer.ts';
-import type { HTTPRequest, HttpResponse } from './types.ts';
+import NodeServer from './src/NodeServer.ts';
+import type { HTTPRequest, HttpResponse } from './src/types.ts';
 
 const app = new NodeServer();
 
