@@ -1,4 +1,6 @@
-import { IncomingMessage, ServerResponse, OutgoingHttpHeaders } from 'http';
+import { IncomingMessage, ServerResponse } from 'http';
+import type { OutgoingHttpHeaders } from 'http';  // <--- type-only import
+
 
 type InformationalStatus = 
     | 100 // Continue
@@ -78,14 +80,18 @@ export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 export type HTTPRequest = {
     method: HttpMethod;
     url: string;
-    headers: IncomingMessage['headers'];
-}
+    headers: Record<string, string>;
+    params: Record<string, string>; // Ajout
+};
+  
 
 export type HttpResponse = {
     writeHead: (statusCode: StatusCode, headers: OutgoingHttpHeaders) => void;
     end: (data?: string | Buffer) => void;
     send: (statusCode: StatusCode, data: string | object) => void;
     json: (statusCode: StatusCode, data: object) => void;
-  };
+};
+
+export type Middleware = (req: HTTPRequest, res: HttpResponse, next: () => void) => void;  
 
 export type RouteHandler = (req: HTTPRequest, res: HttpResponse) => void;
