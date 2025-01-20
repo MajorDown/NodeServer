@@ -3,10 +3,12 @@ import type { HTTPRequest, HttpResponse } from './src/types.ts';
 
 const app = new NodeServer();
 
-// Route GET pour la page d'accueil
-app.get('/', (req: HTTPRequest, res: HttpResponse) => {
-  res.send(200, 'Bienvenue sur la page d\'accueil');
-});
+// // Route GET pour la page d'accueil
+// app.get('/', (req: HTTPRequest, res: HttpResponse) => {
+//   res.send(200, 'Bienvenue sur la page d\'accueil');
+// });
+
+app.static('/upload', () => console.log('Fichier téléchargé !'));
 
 // Route GET pour la page "À propos"
 app.get('/about', (req: HTTPRequest, res: HttpResponse) => {
@@ -36,13 +38,13 @@ app.delete('/delete', (req: HTTPRequest, res: HttpResponse) => {
 
 // Ici, on personnalise le "fallback" GET
 // Si aucune route GET plus haut ne correspond, on tombe ici plutôt que sur la 404 par défaut
-app.get('*', (req: HTTPRequest, res: HttpResponse) => {
-  res.writeHead(404, { 'Content-Type': 'text/html' });
-  res.end(`
-    <h1>404</h1>
-    <p>Oups, cette page GET n'existe pas !</p>
-  `);
-});
+// app.get('*', (req: HTTPRequest, res: HttpResponse) => {
+//   res.writeHead(404, { 'Content-Type': 'text/html' });
+//   res.end(`
+//     <h1>404</h1>
+//     <p>Oups, cette page GET n'existe pas !</p>
+//   `);
+// });
 
 // Démarrage du serveur
 app.listen(3000, () => {
