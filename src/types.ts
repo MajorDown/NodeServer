@@ -95,5 +95,3 @@ export type HttpResponse = {
 export type Middleware = (req: HTTPRequest, res: HttpResponse, next: () => void) => void;  
 
 export type RouteHandler = (req: HTTPRequest, res: HttpResponse) => void;
-
-export type DataType = 'list' | 'object';
