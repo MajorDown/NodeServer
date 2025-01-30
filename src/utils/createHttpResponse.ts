@@ -1,4 +1,3 @@
-// src/utils/createHttpResponse.ts
 import { ServerResponse, type OutgoingHttpHeaders } from 'http';
 import type { StatusCode, HttpResponse } from '../types.ts';
 

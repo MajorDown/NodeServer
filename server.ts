@@ -3,12 +3,12 @@ import type { HTTPRequest, HttpResponse } from './src/types.ts';
 
 const app = new NodeServer();
 
+app.static('/upload', () => console.log('Fichier téléchargé !'));
+
 // // Route GET pour la page d'accueil
 // app.get('/', (req: HTTPRequest, res: HttpResponse) => {
 //   res.send(200, 'Bienvenue sur la page d\'accueil');
 // });
-
-app.static('/upload', () => console.log('Fichier téléchargé !'));
 
 // Route GET pour la page "À propos"
 app.get('/about', (req: HTTPRequest, res: HttpResponse) => {

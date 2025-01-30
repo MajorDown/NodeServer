@@ -4,9 +4,11 @@ import fs from 'fs';
 import path from 'path';
 import pathToRegex from './utils/pathToRegex.ts';
 import extractDynamicParams from './utils/extractDynamicParams.ts';
+import getContentType from './utils/getContentType.ts';
 import { createHttpResponse } from './utils/createHttpResponse.ts';
 import type { HTTPRequest, HttpMethod, RouteHandler } from './types.ts';
 import NotFoundPage from './pages/NotFound.ts';
+import HomePage from './pages/Home.ts';
 
 /*
 * @name NodeServer
@@ -83,7 +85,7 @@ class NodeServer {
 
           if (fs.existsSync(filePath) && fs.statSync(filePath).isFile()) {
             const fileStream = fs.createReadStream(filePath);
-            res.writeHead(200, { 'Content-Type': this.getContentType(filePath) });
+            res.writeHead(200, { 'Content-Type': getContentType(filePath) });
             fileStream.pipe(res);
             fileStream.on('end', () => {
               if (staticRoute.callback) staticRoute.callback();
@@ -118,7 +120,7 @@ class NodeServer {
         // Aucune route ne correspond
         if (methodCast === 'GET' && pathName === '/') {
           response.writeHead(200, { 'Content-Type': 'text/html; charset=UTF-8' });
-          response.end("<h1>NodeServer : Page d'accueil</h1>");
+          response.end(HomePage);
         }
         else if (methodCast === 'GET') {
           response.writeHead(404, { 'Content-Type': 'text/html; charset=UTF-8' });
@@ -136,22 +138,6 @@ class NodeServer {
   private createRoute(method: HttpMethod, path: string, handler: RouteHandler): void {
     const regex = pathToRegex(path);
     this.routes.push({ method, path, regex, handler });
-  }
-
-  private getContentType(filePath: string): string {
-    const ext = path.extname(filePath).toLowerCase();
-    switch (ext) {
-      case '.html': return 'text/html';
-      case '.css': return 'text/css';
-      case '.js': return 'application/javascript';
-      case '.json': return 'application/json';
-      case '.png': return 'image/png';
-      case '.jpg':
-      case '.jpeg': return 'image/jpeg';
-      case '.gif': return 'image/gif';
-      case '.svg': return 'image/svg+xml';
-      default: return 'application/octet-stream';
-    }
   }
 }
 
