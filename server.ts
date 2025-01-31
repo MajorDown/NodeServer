@@ -1,15 +1,9 @@
 import NodeServer from './src/NodeServer.ts';
-import { NodeData } from './src/NodeData.ts';
 import type { HTTPRequest, HttpResponse } from './src/types.ts';
 
 const app = new NodeServer();
 
 app.static('/upload', () => console.log('Fichier téléchargé !'));
-
-const data = new NodeData();
-data.init();
-data.createModel('User');
-
 
 // // Route GET pour la page d'accueil
 // app.get('/', (req: HTTPRequest, res: HttpResponse) => {
